@@ -1,6 +1,6 @@
 FROM node:10
 WORKDIR /code
-COPY package*.json ./
+COPY package*.json /code/
 RUN yarn
-COPY . .
+COPY . /code/
 CMD ["yarn", "start"]

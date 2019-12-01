@@ -1,20 +1,20 @@
 version: "3"
 
 services:
-  db:
+  note_db:
     image: mongo:4.2
     volumes:
-      - mongodb:/data/db
-      - mongodb_config:/data/configdb
-  web:
+      - note_mongodb:/data/db
+      - note_mongodb_config:/data/configdb
+  note_web:
     build: .
     volumes:
       - .:/code
     ports:
-      - "21701:21701"
+      - "21702:21702"
     depends_on:
-      - db
+      - note_db
 
 volumes:
-  mongodb:
-  mongodb_config:
+  note_mongodb:
+  note_mongodb_config:
