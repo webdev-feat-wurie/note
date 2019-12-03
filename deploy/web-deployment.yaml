@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: note-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: note-web-container
+  template:
+    metadata:
+      labels:
+        app: note-web-container
+    spec:
+      containers:
+        - name: note-web
+          image: ashpx/note-web
+          ports:
+            - containerPort: 21702
+          env:
+            - name: MONGODB_HOST
+              value: mongodb-service
+
+          volumeMounts:
+            - name: mongodb-volume-mount
+              mountPath: /var/lib/busybox
+
+          imagePullPolicy: Never
+
+      volumes:
+        - name: mongodb-volume-mount
+          persistentVolumeClaim:
+            claimName: mongodb-pvc

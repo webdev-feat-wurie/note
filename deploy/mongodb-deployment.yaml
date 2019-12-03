@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongodb-container
+  template:
+    metadata:
+      labels:
+        app: mongodb-container
+        tier: backend
+    spec:
+      containers:
+        - name: mongodb-container
+          image: mongo:4-bionic
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: mongodb-volume-mount
+              mountPath: /data/db
+
+      volumes:
+        - name: mongodb-volume-mount
+          persistentVolumeClaim:
+            claimName: mongodb-pvc
